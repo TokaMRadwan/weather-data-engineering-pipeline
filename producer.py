@@ -1,9 +1,10 @@
+import os
 import requests
 import time
 import json
 import random
 
-API_KEY = "6efaef3d144548249db73513261006"
+API_KEY = os.getenv("WEATHER_API_KEY")
 
 CITIES = [
     "Cairo",
