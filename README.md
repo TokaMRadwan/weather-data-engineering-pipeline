@@ -2,44 +2,64 @@
 
 **NTI Big Data Training Project**
 
-**Technologies:** Python, WeatherAPI, Apache Kafka, Apache Flume, HDFS, PySpark Structured Streaming, InfluxDB, Grafana
-
 ## Project Overview
+Developed a real-time weather data pipeline to collect, ingest, store, process, and visualize weather information for seven Egyptian cities.
 
-Developed a real-time weather data engineering pipeline during my NTI Big Data training. The project collects weather observations for seven Egyptian cities from a weather API, processes streaming data using Apache Spark, stores raw events in HDFS, and visualizes weather insights through Grafana dashboards.
+The project demonstrates practical experience with streaming data ingestion, distributed storage, real-time analytics, and data visualization.
+
+## Technologies Used
+- **Programming:** Python
+- **Data Source:** WeatherAPI
+- **Data Ingestion:** Apache Flume
+- **Message Streaming:** Apache Kafka
+- **Distributed Storage:** Hadoop HDFS
+- **Stream Processing:** PySpark Structured Streaming
+- **Time-Series Database:** InfluxDB
+- **Visualization:** Grafana
 
 ## Data Pipeline Architecture
 
-**WeatherAPI → Python Producer → Apache Flume → Kafka**
+**WeatherAPI → Python Producer → Local JSON File → Apache Flume → Apache Kafka**
 
-From Kafka, data flows through two parallel paths:
+The data is then processed through two parallel pipelines:
 
-- **Storage:** Kafka → Apache Flume → HDFS
-- **Analytics:** Kafka → PySpark Structured Streaming → InfluxDB → Grafana
+1. **Storage Pipeline:** Kafka → Apache Flume → HDFS
+2. **Analytics Pipeline:** Kafka → PySpark Structured Streaming → InfluxDB → Grafana
 
-## Project Components
+## Key Features
 
-- **Python Producer (`producer.py`):** Fetches weather observations and writes JSON records to a local file.
-- **Apache Flume (`weather.conf`):** Reads the generated records and publishes them to Kafka.
-- **Apache Kafka:** Manages the weather event stream through `weather_topic`.
-- **HDFS (`kafka-to-hdfs.conf`):** Stores raw weather records for distributed storage.
-- **PySpark (`spark_weather.py`):** Processes streaming weather data and calculates temperature, humidity, and wind-speed statistics for each city.
-- **InfluxDB:** Stores aggregated weather metrics for time-series analysis.
-- **Grafana:** Displays temperature comparisons and trends across Egyptian cities.
+- Collects weather data from seven Egyptian cities through WeatherAPI.
+- Ingests JSON weather records into Apache Kafka using Apache Flume.
+- Stores raw streaming data in HDFS.
+- Processes streaming data using PySpark.
+- Calculates average, maximum, and minimum temperatures, average humidity, and average wind speed by city.
+- Stores aggregated weather metrics in InfluxDB.
+- Visualizes weather information using Grafana dashboards.
 
-## Dashboard Results
+## Project Files
 
-The project includes two Grafana visualizations:
+| File | Description |
+|---|---|
+| `producer.py` | Collects weather data from WeatherAPI |
+| `weather.conf` | Flume configuration for sending records to Kafka |
+| `kafka-to-hdfs.conf` | Flume configuration for storing Kafka data in HDFS |
+| `spark_weather.py` | Spark streaming processing and InfluxDB integration |
 
-- **Current Temperature by City:** Comparison of temperature measurements across seven cities.
-- **Temperature Trend by City:** Visualization of temperature changes over time.
+## Dashboard Visualizations
 
-## Project Environment
+The project includes Grafana screenshots showing:
 
-The project was developed in a Linux-based Big Data training environment using locally configured services. Running it elsewhere requires the relevant Kafka, Flume, Hadoop, Spark, InfluxDB, and Grafana infrastructure.
+- Current Temperature by City
+- Temperature Trend by City
 
-**Security note:** The original producer contained a hard-coded API key, which should be revoked and replaced with secure configuration before the project is shared or reused.
+## Development Environment
 
-## Project Background
+Developed during the National Telecommunication Institute (NTI) Big Data training program in a Linux-based environment using locally configured Big Data services.
 
-Developed as part of the National Telecommunication Institute (NTI) Big Data training program to gain hands-on experience with streaming ingestion, distributed storage, real-time data processing, and visualization.
+Running the project requires configuring Kafka, Flume, HDFS, Spark, InfluxDB, and Grafana.
+
+The Python producer also requires a `WEATHER_API_KEY` environment variable containing a valid WeatherAPI key.
+
+## Project Purpose
+
+To gain hands-on experience building an end-to-end data engineering pipeline that integrates data ingestion, distributed storage, stream processing, time-series analytics, and visualization.
